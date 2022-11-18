@@ -6,11 +6,12 @@ import java.util.Vector;
 public class RunTimeStack {
 
   private Stack<Integer> framePointers;
-  // This may not be the right parameterized type!!
-  private Vector<Object> runStack;
+  private Vector<Integer> runStack;
 
   public RunTimeStack() {
-
+    runStack = new Vector<>();
+    framePointers = new Stack<>();
+    framePointers.push(0);
   }
 
   /**
@@ -20,19 +21,33 @@ public class RunTimeStack {
   public void dump() {
 
   }
+  /**
+   * Outputs the current state of the stack.
+   */
+  public String toString() {
+    String string = "[";
+    for(int i = 0; i < runStack.size()-1; i++) {
+      string += String.format("%d,", runStack.get(i));
+    }
+    string += runStack.lastElement() + "]";
+    
+    return string;
+  }
 
   /**
    * Returns the top item on the runtime stack.
    */
   public int peek() {
-    return 0;
+    return runStack.get(runStack.lastElement());
   }
 
   /**
    * Pops the top item from the runtime stack, returning the item.
    */
   public int pop() {
-    return 0;
+    int lastElement = runStack.lastElement();
+    runStack.remove(runStack.lastElement());
+    return lastElement;
   }
 
   /**
@@ -40,6 +55,7 @@ public class RunTimeStack {
    * pushed.
    */
   public int push(int item) {
+    runStack.add(item);
     return item;
   }
 

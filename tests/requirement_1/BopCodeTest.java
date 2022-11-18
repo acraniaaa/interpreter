@@ -56,7 +56,7 @@ public class BopCodeTest {
 
     private static Stream<Arguments> provideBopCodeTests() {
         return Stream.of(
-            Arguments.of("+", "7", "9", 16),
+            Arguments.of("+", "7", "9", 16) ,
             Arguments.of("-", "7", "9", -2),
             Arguments.of("*", "8", "3", 24),
             Arguments.of("/", "15", "7", 2),

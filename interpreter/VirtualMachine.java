@@ -30,8 +30,7 @@ public class VirtualMachine {
 
   private int pc;
   private RunTimeStack runTimeStack;
-  // This may not be the right parameterized type!!
-  private Stack<Object> returnAddresses;
+  private Stack<Integer> returnAddresses;
   private boolean isRunning;
   private boolean isOutputting;
   private Program program;
@@ -45,12 +44,37 @@ public class VirtualMachine {
     runTimeStack = new RunTimeStack();
     returnAddresses = new Stack<>();
     isRunning = true;
+    isOutputting = false;
 
     while (isRunning) {
       ByteCode code = program.getCode(pc);
       code.execute(this);
-      // runStack.dump(); // check that the operation is correct
+      // runTimeStack.dump(); // check that the operation is correct
       pc++;
     }
   }
+
+  public boolean checkTopOfStack() { //will change this
+    if(runTimeStack.pop() == 0) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  public void changeDebugStatus(boolean debugStatus) {
+    if(debugStatus != this.isOutputting) {
+      this.isOutputting = !this.isOutputting;
+    }
+  }
+
+  public void haltProgram() {
+    this.isRunning = false;
+  }
+  
+  public void createNewFrame(int offset) {
+    runTimeStack.newFrameAt(offset);
+  }
+
 }
