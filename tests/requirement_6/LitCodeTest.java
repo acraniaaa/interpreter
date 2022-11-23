@@ -34,7 +34,7 @@ public class LitCodeTest {
 
         String comparisonString = String.format(
             "%-25sint %s = %s",
-            String.format("LIT %s", lit),
+            String.format("LIT %s %s", lit, id),
             id,
             lit
         );

@@ -17,24 +17,21 @@ reserve space on the runtime stack
 for i
  */
 public class LitCode extends ByteCode {
-    private String byteCode = "LIT ";
-    private Vector<String> args;
+    private String byteCode = "LIT";
+    private List<String> args;
 
     //TODO i should probably use a vector. LIT and LOAD, and other bytecodes probably have more than 1 argument
     //I guess i can make 2 arg variables, but ehh
     public LitCode(List<String> args) {
-        this.args = new Vector<>();
-        for(int i  = 0; i < args.size(); i++) {
-            this.args.add(args.get(i));
-        }
+        this.args = args;
     }
 
     public String toString() {
-        String args = "";
+        String code = this.byteCode;
         for(int i  = 0; i < this.args.size(); i++) {
-            args += String.format(" %s",this.args.get(i));
+            code += String.format(" %s",this.args.get(i));
         }
-        return byteCode + args;
+        return code;
     }
     
     public void execute(VirtualMachine vm) {

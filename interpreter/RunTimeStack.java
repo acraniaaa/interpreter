@@ -3,6 +3,8 @@ package interpreter;
 import java.util.Stack;
 import java.util.Vector;
 
+import interpreter.errors.StackUnderflowException;
+
 public class RunTimeStack {
 
   private Stack<Integer> framePointers;
@@ -37,14 +39,14 @@ public class RunTimeStack {
   /**
    * Returns the top item on the runtime stack.
    */
-  public int peek() {
+  public int peek() throws StackUnderflowException {
     return runStack.get(runStack.lastElement());
   }
 
   /**
    * Pops the top item from the runtime stack, returning the item.
    */
-  public int pop() {
+  public int pop() throws StackUnderflowException {
     int lastElement = runStack.lastElement();
     runStack.remove(runStack.lastElement());
     return lastElement;
@@ -80,14 +82,14 @@ public class RunTimeStack {
    * functions’ return value is at the top of the stack so we’ll save the value,
    * pop the top frame, and then push the return value.
    */
-  public void popFrame() {
+  public void popFrame() throws StackUnderflowException {
 
   }
 
   /**
    * Used to store into variables.
    */
-  public int store(int offset) {
+  public int store(int offset) throws StackUnderflowException {
     return 0;
   }
 

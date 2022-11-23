@@ -1,5 +1,7 @@
 package interpreter.bytecode;
 
+import java.util.List;
+
 import interpreter.VirtualMachine;
 
 /* STORE n <id> STORE 2 i
@@ -10,7 +12,12 @@ comment - it’s the variable’s name
 where the data is stored
  */
 public class StoreCode extends ByteCode {
-    private String byteCode;
+    private String byteCode = "STORE";
+    private List<String> args;
+
+    public StoreCode(List<String> args) {
+        this.args = args;
+    }
 
     public String toString() {
         return byteCode;

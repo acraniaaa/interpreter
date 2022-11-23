@@ -25,5 +25,9 @@ public class CallCode extends ByteCode {
         // TODO Auto-generated method stub
         
     }
+
+    public Object getBranchTarget() {
+        return null;
+    }
     
 }

@@ -1,5 +1,7 @@
 package interpreter.bytecode;
 
+import java.util.List;
+
 import interpreter.VirtualMachine;
 
 /*
@@ -11,6 +13,9 @@ to indicate the function.
 /*RETURN RETURN Generated for intrinsic functions. */
 public class ReturnCode extends ByteCode {
     private String byteCode;
+
+    public ReturnCode(List<String> asList) {
+    }
 
     public String toString() {
         return byteCode;

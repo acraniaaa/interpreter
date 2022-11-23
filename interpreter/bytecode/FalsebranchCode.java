@@ -27,5 +27,9 @@ public class FalsebranchCode extends ByteCode {
         vm.checkTopOfStack(); //will change this
         
     }
+
+    public Object getBranchTarget() {
+        return null;
+    }
     
 }

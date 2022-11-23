@@ -55,12 +55,7 @@ public class VirtualMachine {
   }
 
   public boolean checkTopOfStack() { //will change this
-    if(runTimeStack.pop() == 0) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return true; 
   }
 
   public void changeDebugStatus(boolean debugStatus) {
@@ -73,8 +68,8 @@ public class VirtualMachine {
     this.isRunning = false;
   }
   
-  public void createNewFrame(int offset) {
-    runTimeStack.newFrameAt(offset);
+  public void createNewFrame( int offset ) {
+    runTimeStack.newFrameAt( offset );
   }
 
 }
