@@ -1,0 +1,18 @@
+HALT
+POP 5
+FALSEBRANCH f<<3>>
+GOTO f<<3>>
+STORE 2 i
+LOAD 3 j
+LIT 5
+LIT 0 z
+ARGS 2
+CALL Read
+CALL f<<9>>
+RETURN xyz<<4>>
+RETURN
+BOP +
+WRITE
+LABEL Read
+LABEL f<<3>>
+LABEL f<<9>>

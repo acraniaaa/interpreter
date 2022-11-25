@@ -9,25 +9,35 @@ import interpreter.VirtualMachine;
  * Transfer control to the indicated 
 function
  */
+
+ //TODO REMOVE ALL 'this.', or just make every class variable use 'this.'
 public class CallCode extends ByteCode {
-    private String byteCode = "CALL ";
-    private String arg;
+  private String byteCode = "CALL";
+  private String functionName;
+  private int branchTarget;
 
-    public CallCode(List<String> args) { 
-        this.arg = args.get(0);
-    }
+  public CallCode(List<String> args) { 
+    this.functionName = args.get(0);    
+  }
 
-    public String toString() {
-        return byteCode + arg;
-    }
+  public String toString() {
+    return this.byteCode + " " + this.functionName;
+  }
     
-    public void execute(VirtualMachine vm) {
-        // TODO Auto-generated method stub
-        
-    }
+  public void execute(VirtualMachine vm) {
+    vm.saveReturnAddress();
+    vm.branchToTarget( this.branchTarget );
+  }
 
-    public Object getBranchTarget() {
-        return null;
-    }
+  public String getFunctionName() {
+    return this.functionName;
+  }
+
+  public void setBranchTarget( int branchTarget ) { 
+    this.branchTarget = branchTarget;
+  }
+  public int getBranchTarget() {
+    return this.branchTarget;
+  }
     
 }

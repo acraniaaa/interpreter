@@ -12,18 +12,29 @@ to indicate the function.
  */
 /*RETURN RETURN Generated for intrinsic functions. */
 public class ReturnCode extends ByteCode {
-    private String byteCode;
+  private String byteCode = "RETURN";
+  private String functionName;
+    
 
-    public ReturnCode(List<String> asList) {
+  public ReturnCode(List<String> args) {
+    if(args.size() == 1) {
+      this.functionName = args.get(0);    
     }
+  }
 
-    public String toString() {
-        return byteCode;
-    }
 
-    public void execute(VirtualMachine vm) {
-        // TODO Auto-generated method stub
-        
+
+  public String toString() {
+    if(functionName == null) {
+      return this.byteCode;
+    } else {
+      return this.byteCode + " " + this.functionName;        
     }
+  }
+
+  public void execute(VirtualMachine vm) {
+    vm.popFrame();
+    vm.returnToAddress();
+  }
     
 }

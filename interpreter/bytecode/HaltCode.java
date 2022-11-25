@@ -1,17 +1,23 @@
 package interpreter.bytecode;
 
 import interpreter.VirtualMachine;
+import java.util.List;
 // HALT HALT
 //Halt execution
 public class HaltCode extends ByteCode {
-    private String byteCode = "HALT";
+  private String byteCode = "HALT";
 
-    public String toString() {
-        return byteCode;
-    }
+  public HaltCode(List<String> args) {}
+  
+  public HaltCode() {}
+
+
+  public String toString() {
+    return byteCode;
+  }
     
-    public void execute(VirtualMachine vm) {
-        vm.haltProgram();
-    }
+  public void execute(VirtualMachine vm) {
+    vm.haltProgram();
+  }
     
 }

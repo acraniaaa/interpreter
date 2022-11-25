@@ -12,20 +12,21 @@ comment - it’s the variable’s name
 where the data is stored
  */
 public class StoreCode extends ByteCode {
-    private String byteCode = "STORE";
-    private List<String> args;
+  private String byteCode = "STORE";
+  private int offset;
+  private String variableName;
 
-    public StoreCode(List<String> args) {
-        this.args = args;
-    }
+  public StoreCode(List<String> args) {
+    this.offset = Integer.parseInt(args.get(0));
+    this.variableName =  args.get(1);
+  }
 
-    public String toString() {
-        return byteCode;
-    }
+  public String toString() {
+    return this.byteCode + " " + this.offset + " " + this.variableName;
+  }
     
-    public void execute(VirtualMachine vm) {
-        // TODO Auto-generated method stub
-        
-    }
+  public void execute(VirtualMachine vm) {
+    vm.store( this.offset );
+  }
     
 }

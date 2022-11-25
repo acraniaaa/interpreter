@@ -7,23 +7,26 @@ import interpreter.VirtualMachine;
 //TODO remove all comments of bytecode to not lose points
 //
 public class DbgCode extends ByteCode {
-    private String byteCode = "DBG ";
-    private String arg;
+  private String byteCode = "DBG";
+  private int debugState;
 
-    public DbgCode(List<String> args) {
-        this.arg = args.get(0);
-    }
+  public DbgCode(List<String> args) {
+    this.debugState = Integer.parseInt(args.get(0));
+  }
 
-    public String toString() {
-        return byteCode + arg;
+  public String toString() {
+    if( debugState == 1 ) {
+      return this.byteCode + " ON";
     }
+    return this.byteCode + " OFF";
+  }
     
-    public void execute(VirtualMachine vm) {
-        if(arg.equals("ON")) {
-            vm.changeDebugStatus(true);
-        } else if (arg.equals("OFF")) {
-            vm.changeDebugStatus(false);
-        }
+  public void execute(VirtualMachine vm) {
+    if( debugState == 1 ) {
+      vm.changeDebugStatus(true);
+    } else {
+      vm.changeDebugStatus(false);
     }
+  }
     
 }

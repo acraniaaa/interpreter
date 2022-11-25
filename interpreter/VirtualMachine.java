@@ -24,6 +24,8 @@
 package interpreter;
 
 import interpreter.bytecode.ByteCode;
+import interpreter.errors.StackUnderflowException;
+
 import java.util.Stack;
 
 public class VirtualMachine {
@@ -49,13 +51,51 @@ public class VirtualMachine {
     while (isRunning) {
       ByteCode code = program.getCode(pc);
       code.execute(this);
+      System.out.println(runTimeStack.toString());
       // runTimeStack.dump(); // check that the operation is correct
       pc++;
     }
+
   }
 
-  public boolean checkTopOfStack() { //will change this
-    return true; 
+  public boolean checkTopOfStack() {
+    boolean result = false;
+    try {
+      if( runTimeStack.pop() == 0 ) {
+        result = false;
+      } else {
+        result = true;
+      }
+    } catch (StackUnderflowException e) {
+    }
+    return result;
+  }
+
+  public void saveReturnAddress() {
+    this.returnAddresses.add(this.pc);
+  }
+
+  public void returnToAddress() {
+    pc = returnAddresses.pop();
+  }
+
+  public void popFrame() {
+    try {
+      runTimeStack.popFrame();
+    } catch (StackUnderflowException e) {
+    }
+  }
+
+  public void pop( int amountToPop ) {
+    for(int i = 0; i < amountToPop; i++) {
+      try {
+        runTimeStack.pop();
+      } catch (StackUnderflowException e) {
+      }
+    }
+  }
+  public void branchToTarget(int branchTarget) {
+    this.pc = branchTarget;
   }
 
   public void changeDebugStatus(boolean debugStatus) {
@@ -69,7 +109,33 @@ public class VirtualMachine {
   }
   
   public void createNewFrame( int offset ) {
-    runTimeStack.newFrameAt( offset );
+    this.runTimeStack.newFrameAt( offset );
+  }
+
+  public void loadLiteralValue( int litValue ) { 
+    this.runTimeStack.push( litValue );
+  }
+
+  public void executeBinaryOperation(String arg) {
+    try {
+      this.runTimeStack.executeBinaryOperation( arg );
+    } catch (StackUnderflowException e) {}
+  }
+
+  public void load( int offset ) { 
+    runTimeStack.load( offset );
+  }
+
+  public void store( int offset ) {
+    try {
+      runTimeStack.store( offset );
+    } catch (StackUnderflowException e) {}
+  }
+
+  public void write() {
+    try {
+      this.runTimeStack.write();
+    } catch (StackUnderflowException e) {}
   }
 
 }

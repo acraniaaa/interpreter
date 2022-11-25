@@ -12,18 +12,21 @@ used as a comment - it’s the
 variable’s name from which the data 
 is loaded */
 public class LoadCode extends ByteCode {
-    private String byteCode;
+  private String byteCode = "LOAD";
+  private int offset;
+  private String variableName;
 
-    public LoadCode(List<String> asList) {
-    }
+  public LoadCode(List<String> args) {
+    this.offset = Integer.parseInt(args.get(0));
+    this.variableName = args.get(1); 
+  }
 
-    public String toString() {
-        return byteCode;
-    }
+  public String toString() {
+    return this.byteCode + " " + this.offset + " " + this.variableName;
+  }
     
-    public void execute(VirtualMachine vm) {
-        // TODO Auto-generated method stub
-        
-    }
+  public void execute(VirtualMachine vm) {
+    vm.load( this.offset );
+  }
     
 }

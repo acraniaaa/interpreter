@@ -8,24 +8,31 @@ import interpreter.VirtualMachine;
  * GOTO <label> GOTO xyz<<3>>
  */
 public class GotoCode extends ByteCode {
-    private String byteCode = "GOTO ";
-    private String arg;
+  private String byteCode = "GOTO";
+  private String label;
+  private int branchTarget;
 
-    public GotoCode(List<String> args) {
-        this.arg = args.get(0);
-    }
+  public GotoCode(List<String> args) {
+    this.label = args.get(0);  
+  }
 
-    public String toString() {
-        return byteCode + arg;
-    }
+  public String toString() {
+    return this.byteCode + " " + this.label;
+  }
     
-    public void execute(VirtualMachine vm) {
-        // TODO Auto-generated method stub
-        
-    }
+  public void execute(VirtualMachine vm) {
+    vm.branchToTarget( this.branchTarget );
+  }
 
-    public Object getBranchTarget() {
-        return null;
-    }
+  public String getLabel() {
+    return this.label;
+  }
+
+  public void setBranchTarget(int branchTarget) { 
+    this.branchTarget = branchTarget;
+  }
+  public int getBranchTarget() {
+    return this.branchTarget;
+  }
     
 }

@@ -188,6 +188,7 @@ public class RuntimeStackTest {
         }
     }
 
+    @Test
     public void testStackUnderflowStore() {
         RunTimeStack rts = new RunTimeStack();
 

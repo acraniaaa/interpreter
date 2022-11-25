@@ -9,21 +9,24 @@ LABEL Read
 Target for branches 
 (FALSEBRANCH, GOTO, CALL) */
 public class LabelCode extends ByteCode {
-    private String byteCode = "LABEL ";
-    private String arg;
+  private String byteCode = "LABEL";
+  private String label;
 
     //TODO add a new variable for the argument, if necessary
     // this means separating the byteCode and argument. If using toString(), just add them both
-    public LabelCode(List<String> args) {
-        this.arg += args.get(0);
-    }
+  public LabelCode(List<String> args) {
+    this.label = args.get(0);  
+  }
 
-    public String toString() {
-        return byteCode + arg;
-    }
+  public String toString() {
+    return this.byteCode + " " + this.label;
+  }
     
-    public void execute(VirtualMachine vm) {
-        // TODO Auto-generated method stub
-    }
+  public void execute(VirtualMachine vm) {}
+
+  public String getLabel() {
+    return label;
+  }
+  
     
 }

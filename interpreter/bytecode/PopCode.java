@@ -9,18 +9,19 @@ import interpreter.VirtualMachine;
  */
 //Pop top n levels of the runtime stack
 public class PopCode extends ByteCode {
-    private String byteCode = "POP ";
+  private String byteCode = "POP";
+  private int amountToPop;
 
-    public PopCode(List<String> args) {
-        this.byteCode += args.get(0);
-    }
+  public PopCode(List<String> args) {
+    this.amountToPop = Integer.parseInt(args.get(0)); 
+  }
 
-    public String toString() {
-        return byteCode;
-    }
+  public String toString() {
+    return this.byteCode + " " + this.amountToPop;
+  }
     
-    public void execute(VirtualMachine vm) {
-        
-    }
+  public void execute(VirtualMachine vm) {
+    vm.pop( this.amountToPop );
+  }
     
 }
