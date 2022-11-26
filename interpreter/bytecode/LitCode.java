@@ -16,7 +16,6 @@ reserve space on the runtime stack
 for i
  */
 public class LitCode extends ByteCode {
-  private String byteCode = "LIT";
   private int litVal;
   private String litID;
 
@@ -29,9 +28,16 @@ public class LitCode extends ByteCode {
 
   public String toString() {
     if(litID == null) {
-      return byteCode + " " + litVal;
+      return String.format("%-25sint %d",
+        String.format("LIT %d", this.litVal), 
+        this.litVal
+      );
     } else {
-      return byteCode + " " + litVal + " " + litID;
+      return String.format("%-25sint %s = %d",
+        String.format("LIT %d %s", this.litVal, this.litID), 
+        this.litID,
+        this.litVal
+      );
     }
   }
     

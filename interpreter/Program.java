@@ -23,7 +23,6 @@ public class Program {
         );
       }
     }
-    System.out.println(addresses.toString());
 
     for(int i = 0; i < bytecodes.size(); i++) {
       ByteCode byteCode = bytecodes.get(i); 

@@ -22,6 +22,10 @@ public class ReturnCode extends ByteCode {
     }
   }
 
+  public String getFunctionName() {
+    return this.functionName;
+  }
+
 
 
   public String toString() {

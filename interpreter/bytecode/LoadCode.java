@@ -12,7 +12,6 @@ used as a comment - it’s the
 variable’s name from which the data 
 is loaded */
 public class LoadCode extends ByteCode {
-  private String byteCode = "LOAD";
   private int offset;
   private String variableName;
 
@@ -22,7 +21,10 @@ public class LoadCode extends ByteCode {
   }
 
   public String toString() {
-    return this.byteCode + " " + this.offset + " " + this.variableName;
+    return String.format("%-25s<load %s>",
+      String.format("LOAD %d %s", this.offset, this.variableName),
+      variableName
+    );
   }
     
   public void execute(VirtualMachine vm) {

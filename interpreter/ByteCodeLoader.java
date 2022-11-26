@@ -31,7 +31,6 @@ public class ByteCodeLoader {
         .forName( byteCodeSubclass )
         .getConstructor( List.class )
         .newInstance( args );
-        System.out.println(byteCode.toString());
         program.addCode( byteCode );
 
       } catch ( Exception e ) {

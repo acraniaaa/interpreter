@@ -28,5 +28,13 @@ public class StoreCode extends ByteCode {
   public void execute(VirtualMachine vm) {
     vm.store( this.offset );
   }
+
+  public int getOffset() {
+    return this.offset;
+  }
+
+  public String getVariableName() {
+    return this.variableName;
+  }
     
 }

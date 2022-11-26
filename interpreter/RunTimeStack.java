@@ -17,42 +17,34 @@ public class RunTimeStack {
   }
 
   /**
-   * The purpose of this function is to dump the RunTimeStack for the 
-   * purpose of debugging.
-   */
-  public void dump() {
-      //TODO this is the aligned text thing, i need to figure out toString() first before doing this
-  }
-  /**
    * Outputs the current state of the stack.
    */
-  //TODO this is wrong, and way too long. Change this and work on it
+  @SuppressWarnings("unchecked")
   public String toString() {
-    /*
-     * Stack<Integer> framePointersCopy = this.framePointers;
-    String[] frames = new String[framePointersCopy.size()];
-    for(int i = 0; i < framePointersCopy.size(); i++) {
-      String frame = "[";
-      int endFrame = framePointersCopy.pop();
-      int startFrame = framePointersCopy.peek();
-      for(int j = startFrame; j < endFrame - 1; j++) {
-        frame += String.format("%d,", this.runStack.get(j));
+    Stack<Integer> framePointersCopy = (Stack<Integer>) this.framePointers.clone();
+    Vector<String> frames = new Vector<>();
+    int upperIndex = runStack.size() - 1;
+    while( framePointersCopy.size() > 0 ) {
+      int lowerIndex = framePointersCopy.pop();
+      String currentFrame = "[";
+      for(int i = lowerIndex; i < upperIndex; i++) {
+        currentFrame += String.format("%d,", runStack.get(i));
       }
-      frame += this.runStack.get(endFrame) + "]";
-      frames[i] = frame;
-    }
-    String output = "";
-    if(frames.length > 1) {
-      for(int i = 0; i < frames.length-1; i++) {
-        output += frames[i] + " ";
+      if(upperIndex >= 0) {
+        currentFrame += runStack.get(upperIndex) + "]";
+      } else {
+        currentFrame += "]";
       }
+      frames.add(currentFrame);
+      upperIndex = lowerIndex-1;
+    }    
+    
+    String result = "";
+    for(int i = frames.size()-1; i > 0; i--) {
+      result += frames.get(i) + " ";
     }
-    output += frames[frames.length-1];
-    
-    return output;
-    
-     */
-    return runStack.toString();
+    result += frames.firstElement();
+    return result;
   }
 
   /**
@@ -74,8 +66,6 @@ public class RunTimeStack {
     }
     int lastElement = runStack.lastElement();
     runStack.remove(runStack.size()-1);
-    System.out.println(runStack.toString());
-    System.out.println(lastElement);
     return lastElement;
   }
 
@@ -130,16 +120,18 @@ public class RunTimeStack {
     int storedValue = this.pop();
     int index = framePointers.peek() + offset;
     this.runStack.insertElementAt(storedValue, index);
-    this.runStack.removeElementAt(index + 1);
-    return 0;
+    if(this.runStack.size() == 1) {
+      throw new StackUnderflowException();
+    } else {
+      this.runStack.removeElementAt(index + 1);
+    }
+    return storedValue;
   }
 
   /**
    * Used to load variables onto the stack.
    */
-  //TODO ask why store and load return int values
   public int load(int offset) {
-    System.out.println("sdfa");
     if(framePointers.isEmpty()){
       runStack.add(offset, runStack.get(offset));
   }else {

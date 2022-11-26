@@ -7,6 +7,7 @@ LOAD 0 dummyFormal
 WRITE
 RETURN
 LABEL start<<1>>
+DBG 1
 LIT 0 i
 LIT 0 j
 LOAD 0 i
@@ -20,4 +21,6 @@ ARGS 1
 CALL Write
 STORE 1 j
 POP 2
+DBG 0
 HALT
+
