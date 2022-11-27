@@ -4,13 +4,6 @@ import java.util.List;
 
 import interpreter.VirtualMachine;
 
-/*
- * CALL <funcname> CALL f CALL f<<3>>
- * Transfer control to the indicated 
-function
- */
-
- //TODO REMOVE ALL 'this.', or just make every class variable use 'this.'
 public class CallCode extends ByteCode {
   private String byteCode = "CALL";
   private String functionName;

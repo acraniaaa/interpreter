@@ -43,7 +43,7 @@ public class ByteCodeLoader {
   }
 
   public String read() throws IOException {
-    String nextLine = source.readLine();
+    String nextLine = this.source.readLine();
     if( nextLine == null ) {
       throw new IOException();
     }

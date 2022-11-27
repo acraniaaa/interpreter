@@ -51,7 +51,7 @@ public class RunTimeStack {
    * Returns the top item on the runtime stack.
    */
   public int peek() throws StackUnderflowException {
-    if(runStack.size() <= framePointers.peek()) {
+    if(runStack.size() <= this.framePointers.peek()) {
       throw new StackUnderflowException();
     }
     return runStack.lastElement();
@@ -61,7 +61,7 @@ public class RunTimeStack {
    * Pops the top item from the runtime stack, returning the item.
    */
   public int pop() throws StackUnderflowException {
-    if(runStack.size() <= framePointers.peek()) {
+    if(runStack.size() <= this.framePointers.peek() ) {
       throw new StackUnderflowException();
     }
     int lastElement = runStack.lastElement();
@@ -92,7 +92,7 @@ public class RunTimeStack {
    * down from the top of the RunTimeStack for starting the new frame.
    */
   public void newFrameAt(int offset) {
-    framePointers.push(runStack.size() - offset);
+    this.framePointers.push(runStack.size() - offset);
   }
 
   /**
@@ -101,15 +101,15 @@ public class RunTimeStack {
    * pop the top frame, and then push the return value.
    */
   public void popFrame() throws StackUnderflowException {
-    if(framePointers.size() == 1) {
+    if( this.framePointers.size() == 1 ) {
       throw new StackUnderflowException();
     }
     int returnValue = runStack.lastElement();
-    while(runStack.size() > framePointers.peek()) {
-      runStack.remove(runStack.lastElement());
+    while(this.runStack.size() > this.framePointers.peek()) {
+      this.runStack.remove( this.runStack.lastElement() );
     }
-    framePointers.pop();
-    runStack.add(returnValue);
+    this.framePointers.pop();
+    this.runStack.add( returnValue );
 
   }
 
@@ -118,7 +118,7 @@ public class RunTimeStack {
    */
   public int store( int offset ) throws StackUnderflowException {
     int storedValue = this.pop();
-    int index = framePointers.peek() + offset;
+    int index = this.framePointers.peek() + offset;
     this.runStack.insertElementAt(storedValue, index);
     if(this.runStack.size() == 1) {
       throw new StackUnderflowException();
@@ -132,13 +132,14 @@ public class RunTimeStack {
    * Used to load variables onto the stack.
    */
   public int load(int offset) {
-    if(framePointers.isEmpty()){
-      runStack.add(offset, runStack.get(offset));
+    int loadedValue = this.runStack.get( offset );
+    if( this.framePointers.isEmpty() ){
+      this.runStack.add(offset, loadedValue );
   }else {
       offset += framePointers.lastElement();
-      runStack.add(runStack.get(offset));
+      this.runStack.add( loadedValue );
       }
-    return 0;
+    return loadedValue;
   }
 
   public void write() throws StackUnderflowException {

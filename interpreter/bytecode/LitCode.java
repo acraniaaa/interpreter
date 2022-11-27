@@ -4,17 +4,6 @@ import java.util.List;
 
 import interpreter.VirtualMachine;
 
-// LIT n LIT 5
-//Load the literal value n
-/*
- * LIT 0 <id> LIT 0 i
- * 
- * This form of the LIT was generated 
-to load 0 on the stack in order to 
-initialize the variable i to 0 and 
-reserve space on the runtime stack 
-for i
- */
 public class LitCode extends ByteCode {
   private int litVal;
   private String litID;
@@ -22,7 +11,7 @@ public class LitCode extends ByteCode {
   public LitCode(List<String> args) {
     this.litVal = Integer.parseInt(args.get(0));
     if(args.size() == 2) {
-      litID = args.get(1);
+      this.litID = args.get(1);
     }
   }
 
@@ -42,7 +31,7 @@ public class LitCode extends ByteCode {
   }
     
     public void execute(VirtualMachine vm) {
-      vm.loadLiteralValue( litVal );
+      vm.push( this.litVal );
   }
     
 }

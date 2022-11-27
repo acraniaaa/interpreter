@@ -4,9 +4,6 @@ import java.util.List;
 
 import interpreter.VirtualMachine;
 
-/*
- * GOTO <label> GOTO xyz<<3>>
- */
 public class GotoCode extends ByteCode {
   private String byteCode = "GOTO";
   private String label;

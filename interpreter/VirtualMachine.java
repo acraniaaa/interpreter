@@ -51,9 +51,9 @@ public class VirtualMachine {
     isOutputting = false;
 
     while ( isRunning ) {
-      ByteCode code = program.getCode(pc);
+      ByteCode code = this.program.getCode(pc);
       code.execute(this);
-      if( isOutputting ) {
+      if( this.isOutputting ) {
         if( code.toString().contains("DBG") ) {
           this.pc++;
           continue;
@@ -67,50 +67,16 @@ public class VirtualMachine {
 
   }
 
-  public void debug(ByteCode code) throws StackUnderflowException {
+  private void debug(ByteCode code) throws StackUnderflowException {
     if(code.toString().contains("RETURN")) {
-      ReturnCode returnCode = (ReturnCode)code;
-      String functionName = returnCode.getFunctionName();
-      String baseID = getBaseID(functionName);
-      System.out.println(String.format("%-25send %s: %d",
-        String.format("RETURN %s", functionName),
-        baseID,
-        this.runTimeStack.peek()
-        )
-      );
-
+      debugReturn(code);
     }
     else if(code.toString().contains("CALL")) {
-      CallCode callCode = (CallCode)code;
-      String functionName = callCode.getFunctionName();
-      String baseID = getBaseID(functionName);
-      String args = "";
-      String runTimeStackString = runTimeStack.toString();
-      if(this.lastOffset > 0) {
-        for(int i = runTimeStackString.length()-2; i > 0; i--) {
-          if(runTimeStackString.charAt(i) == '[') {
-            break;
-          }
-          args += runTimeStackString.charAt(i);
-        }
-        args = new StringBuilder(args).reverse().toString();
-      }
-      
-      System.out.println(String.format("%-25s%s(%s)",
-        String.format("CALL %s", functionName),
-        baseID,
-        args
-        )
-      );
+      debugCall(code);
     }
     else if(code.toString().contains("STORE")) {
-      StoreCode storeCode = (StoreCode)code;
-      System.out.println(String.format("%-25s%s = %d",
-        String.format("STORE %d %s", storeCode.getOffset(), storeCode.getVariableName()),
-        storeCode.getVariableName(),
-        this.lastStoredValue
-        )
-      );
+      debugStore(code);
+
     } 
     else {
       System.out.println(code.toString());
@@ -120,21 +86,24 @@ public class VirtualMachine {
 
   }
 
-  public String getBaseID(String functionName) {
+  private String getBaseID(String functionName) {
     String baseID = "";
-      for(int i = 0; i < functionName.length(); i++) {
-        if(functionName.charAt(i) == '<') {
-          break;
-        }
-        baseID += functionName.charAt(i);
+    if(functionName == null) {
+      return baseID;
+    }
+    for(int i = 0; i < functionName.length(); i++) {
+      if(functionName.charAt(i) == '<') {
+        break;
       }
+      baseID += functionName.charAt(i);
+    }
     return baseID;
   }
 
   public boolean checkTopOfStack() {
     boolean result = false;
     try {
-      if( runTimeStack.pop() == 0 ) {
+      if( this.runTimeStack.pop() == 0 ) {
         result = false;
       } else {
         result = true;
@@ -148,19 +117,19 @@ public class VirtualMachine {
   }
 
   public void returnToAddress() {
-    pc = returnAddresses.pop();
+    pc = this.returnAddresses.pop();
   }
 
   public void popFrame() {
     try {
-      runTimeStack.popFrame();
+      this.runTimeStack.popFrame();
     } catch (StackUnderflowException e) {}
   }
 
   public void pop( int amountToPop ) {
     for(int i = 0; i < amountToPop; i++) {
       try {
-        runTimeStack.pop();
+        this.runTimeStack.pop();
       } catch (StackUnderflowException e) {}
     }
   }
@@ -181,7 +150,7 @@ public class VirtualMachine {
     this.lastOffset = offset;
   }
 
-  public void loadLiteralValue( int litValue ) { 
+  public void push( int litValue ) { 
     this.runTimeStack.push( litValue );
   }
 
@@ -192,12 +161,12 @@ public class VirtualMachine {
   }
 
   public void load( int offset ) { 
-    runTimeStack.load( offset );
+    this.runTimeStack.load( offset );
   }
 
   public void store( int offset ) {
     try {
-      this.lastStoredValue = runTimeStack.store( offset );
+      this.lastStoredValue = this.runTimeStack.store( offset );
     } catch (StackUnderflowException e) {}
   }
 
@@ -206,5 +175,57 @@ public class VirtualMachine {
       this.runTimeStack.write();
     } catch (StackUnderflowException e) {}
   }
+
+  private void debugReturn(ByteCode code) throws StackUnderflowException {
+    ReturnCode returnCode = (ReturnCode)code;
+      String functionName = returnCode.getFunctionName();
+      if( functionName == null ) {
+        functionName = "";
+      }
+      String baseID = getBaseID(functionName);
+      System.out.println(String.format("%-25send %s: %d",
+        String.format("RETURN %s", functionName),
+        baseID,
+        this.runTimeStack.peek()
+        )
+      );
+
+  }
+
+  private void debugCall(ByteCode code) throws StackUnderflowException {
+    CallCode callCode = (CallCode)code;
+    String functionName = callCode.getFunctionName();
+    String baseID = getBaseID(functionName);
+    String args = "";
+    String runTimeStackString = this.runTimeStack.toString();
+    if( this.lastOffset > 0 ) {
+      for(int i = runTimeStackString.length()-2; i > 0; i--) {
+        if( runTimeStackString.charAt(i) == '[' ) {
+          break;
+        }
+        args += runTimeStackString.charAt(i);
+      }
+      args = new StringBuilder(args).reverse().toString();
+    }
+    
+    System.out.println(String.format("%-25s%s(%s)",
+      String.format("CALL %s", functionName),
+      baseID,
+      args
+      )
+    );
+
+  }
+
+  private void debugStore(ByteCode code) throws StackUnderflowException {
+    StoreCode storeCode = (StoreCode)code;
+    System.out.println(String.format("%-25s%s = %d",
+      String.format("STORE %d %s", storeCode.getOffset(), storeCode.getVariableName()),
+      storeCode.getVariableName(),
+      this.lastStoredValue
+      )
+    );
+  }
+
 
 }

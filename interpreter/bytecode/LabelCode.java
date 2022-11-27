@@ -4,16 +4,10 @@ import java.util.List;
 
 import interpreter.VirtualMachine;
 
-/*LABEL <label> LABEL xyz<<3>> 
-LABEL Read
-Target for branches 
-(FALSEBRANCH, GOTO, CALL) */
 public class LabelCode extends ByteCode {
   private String byteCode = "LABEL";
   private String label;
 
-    //TODO add a new variable for the argument, if necessary
-    // this means separating the byteCode and argument. If using toString(), just add them both
   public LabelCode(List<String> args) {
     this.label = args.get(0);  
   }
@@ -25,7 +19,7 @@ public class LabelCode extends ByteCode {
   public void execute(VirtualMachine vm) {}
 
   public String getLabel() {
-    return label;
+    return this.label;
   }
   
     

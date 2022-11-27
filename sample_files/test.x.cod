@@ -1,4 +1,4 @@
-HALT
+DBG 1
 POP 5
 FALSEBRANCH f<<3>>
 GOTO f<<3>>
@@ -16,3 +16,5 @@ WRITE
 LABEL Read
 LABEL f<<3>>
 LABEL f<<9>>
+READ
+HALT

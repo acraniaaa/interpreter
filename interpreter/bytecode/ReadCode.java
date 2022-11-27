@@ -2,7 +2,7 @@ package interpreter.bytecode;
 
 import interpreter.VirtualMachine;
 import java.util.List;
-
+import java.util.Scanner;
 /*
  * READ READ
 Read an integer - prompt the 
@@ -17,11 +17,15 @@ public class ReadCode extends ByteCode {
   public ReadCode() {}
 
   public String toString() {
-    return byteCode;
+    return this.byteCode;
   }
     
   public void execute(VirtualMachine vm) {
-    // TODO Auto-generated method stub     
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("Enter a value: ");
+    int input = scanner.nextInt();
+    vm.push( input );
+    scanner.close();
   }
     
 }

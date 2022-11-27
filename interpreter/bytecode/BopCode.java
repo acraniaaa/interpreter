@@ -4,14 +4,6 @@ import java.util.List;
 
 import interpreter.VirtualMachine;
 
-/*
- * BOP <binary op> BOP +
-Pop top 2 levels of the stack and 
-perform the indicated operation  
-(+ - / * == != <= > >= < | &) 
-The lower level in the stack is 
-the first operand
- */
 public class BopCode extends ByteCode {
   private String byteCode = "BOP";
   private String arg;

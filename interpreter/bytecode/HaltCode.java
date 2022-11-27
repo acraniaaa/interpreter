@@ -2,8 +2,7 @@ package interpreter.bytecode;
 
 import interpreter.VirtualMachine;
 import java.util.List;
-// HALT HALT
-//Halt execution
+
 public class HaltCode extends ByteCode {
   private String byteCode = "HALT";
 
@@ -13,7 +12,7 @@ public class HaltCode extends ByteCode {
 
 
   public String toString() {
-    return byteCode;
+    return this.byteCode;
   }
     
   public void execute(VirtualMachine vm) {

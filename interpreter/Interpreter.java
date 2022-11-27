@@ -9,14 +9,14 @@ public class Interpreter {
   public Interpreter(String codeFile) {
     try {
       CodeTable.init();
-      byteCodeLoader = new ByteCodeLoader(codeFile);
+      this.byteCodeLoader = new ByteCodeLoader(codeFile);
     } catch (IOException e) {
       System.out.println("**** " + e);
     }
   }
 
   void run() {
-    Program program = byteCodeLoader.loadCodes();
+    Program program = this.byteCodeLoader.loadCodes();
     VirtualMachine vm = new VirtualMachine(program);
     vm.executeProgram();
   }

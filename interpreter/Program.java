@@ -8,24 +8,23 @@ public class Program {
   private Vector<ByteCode> bytecodes = new Vector<>();
   
   public ByteCode getCode(int programCounter) {
-    return bytecodes.get(programCounter);
+    return this.bytecodes.get(programCounter);
   }
-  //this is ran once all bytecodes are inserted into the vector. addresses of labels/functions are
-  // their index number in the vector
+
   public void resolveSymbolicAddresses() {
     HashMap<String, Integer> addresses = new HashMap<>();
 
-    for(int i = 0; i < bytecodes.size(); i++) {
-      if(bytecodes.get(i).toString().contains("LABEL")) {
+    for(int i = 0; i < this.bytecodes.size(); i++) {
+      if( this.bytecodes.get(i).toString().contains("LABEL") ) {
         addresses.put(
-          ( ( LabelCode )bytecodes.get(i) ).getLabel(),
+          ( ( LabelCode )this.bytecodes.get(i) ).getLabel(),
           i
         );
       }
     }
 
-    for(int i = 0; i < bytecodes.size(); i++) {
-      ByteCode byteCode = bytecodes.get(i); 
+    for(int i = 0; i < this.bytecodes.size(); i++) {
+      ByteCode byteCode = this.bytecodes.get(i); 
       String byteCodeSubclass = byteCode.toString();
       if( byteCodeSubclass.contains("FALSEBRANCH") ) {
         FalsebranchCode falsebranchByteCode = ( FalsebranchCode ) byteCode;
@@ -55,8 +54,6 @@ public class Program {
     }
 
   }
-
-  
 
   public void addCode(ByteCode bytecode) {
     bytecodes.add(bytecode);
