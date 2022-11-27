@@ -21,13 +21,13 @@ ByteCodeLoader, Program and VirtualMachine are all pointing to the *bytecode* pa
 ## Scope of work and Project Discussion
 
 Include a list of the tasks and requirements you completed, with a discussion of each task.
-###Task 1
+### Task 1
 One of the first tasks I worked on was populating the *bytecode* package with 15 subclasses that each inherit the ByteCode abstract class, for the purpose of just being able to read in these bytecodes, and then later on I can add functionality to them. 
 
-###Task 2
+### Task 2
 My second task was to work on building up the CodeTable, ByteCodeLoader and Program classes to able to read in these bytecodes. The first 4 bytecodes I implemented were LABEL, FALSEBRANCH, GOTO, and CALL, since these were the bytecodes that require use of the resolveSymbolicAddresses() method; they were implemented first for testing purposes.
 
-###Task 3
+### Task 3
 The third task was to work on implementing the RunTimeStack. This involved creating methods in the VirtualMachine class that would be called by each individual bytecode as needed, to pass certain instructions and data from the bytecode to the RunTimeStack. For this part of the project, I implemented each bytecode 1 by 1 so that I can test if they work or not, and make adjustments. During this part, I tried my best to not break encapsulation.
 
 ## Results and Conclusions
